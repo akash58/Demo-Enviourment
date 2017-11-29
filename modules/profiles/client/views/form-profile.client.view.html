@@ -1,0 +1,100 @@
+<section >
+ <md-subheader>
+    <div layout="row">
+      <h3 flex>
+        <b style="font-color:'black'">Create Profile</b>
+      </h3>
+      <md-icon ng-click="vm.goBackToLIst()" md-svg-src="/modules/core/client/img/svg/ic_arrow_back_black_24px.svg" aria-lable="back">
+        <md-tooltip md-direction="down">
+          Back to list
+        </md-tooltip>
+      </md-icon>
+    </div>
+  </md-subheader>
+  <!-- <md-content>
+    <form> -->
+  <div>
+    <form name="vm.profileForm" class="form-horizontal" ng-submit="vm.save(vm.profileForm.$valid)" >
+      <div layout="row" layout-wrap  layout-gt-md="row" layout-xs="column">
+        <div flex>
+          <md-input-container class="md-block">
+            <!-- <label>First Name : </label> -->
+            <input type="text" name="name" ng-model="vm.name" placeholder="First Name" ng-pattern="/^[A-z]+$/" autofocus required>
+            <div ng-messages="vm.profileForm.name.$error" multiple md-auto-hide="true" ng-if="vm.profileForm.name.$touched || vm.profileForm.name.$dirty ">
+              <div ng-message="required" ng-style="{color: vm.profileForm.name.$touched ? 'Red' : 'Blue' }">
+                This is a required Field
+              </div>
+            </div>
+          </md-input-container>
+        </div>
+        <div flex>
+          <md-input-container class="md-block">
+            <!-- <label>First Name : </label> -->
+            <input type="text" name="lastName" ng-model="vm.lastName" placeholder="Last Name" required>
+            <div ng-messages="vm.profileForm.lastName.$error"  multiple md-auto-hide="true" ng-if="vm.profileForm.lastName.$touched || vm.profileForm.lastName.$dirty ">
+              <div ng-message="required" ng-style="{ color: vm.profileForm.lastName.$touched ? 'Red' : 'Blue' }">
+                This is a required Field
+              </div>
+            </div>
+          </md-input-container>
+        </div>
+      </div>
+      <div layout="row" layout-wrap  layout-gt-md="row" layout-xs="column">
+        <div flex>
+          <md-input-container class = "md-block">
+            <md-icon md-svg-src="/modules/core/client/img/svg/ic_call_black_48px.svg" class="md-block"></md-icon>
+            <input type="number" name="contactNumber" ng-model="vm.contactNumber" placeholder="Contact Number" ng-pattern="/^[0-9]/" ng-maxlength="10" min="0" required>
+            <div ng-messages="vm.profileForm.contactNumber.$error"  multiple md-auto-hide="false" ng-if="vm.profileForm.contactNumber.$touched || vm.profileForm.contactNumber.$dirty ">
+              <div ng-message="required" ng-style="{color: vm.profileForm.contactNumber.$touched ? 'Red' : 'Blue' }">
+                This is a required Field
+              </div>
+              <div ng-message="maxlength" ng-style="{color: vm.profileForm.contactNumber.$touched ? 'Red' : 'Blue' }">
+                Length must not greater than 10.
+              </div>
+              <div ng-message="pattern" ng-style="{color: vm.profileForm.contactNumber.$touched ? 'Red' : 'Blue' }">
+                Pattern not match.
+              </div>
+            </div>
+          </md-input-container>
+        </div>
+        <div flex = "50">
+          <label>Gender:</label>
+          <md-radio-group layout="row" data-ng-model="vm.gender">
+            <md-radio-button value="Male" class="md-primary">Male</md-radio-button>
+            <md-radio-button value="Female">Female</md-radio-button>
+          </md-radio-group>
+        </div>
+      </div>
+      <div layout="row" layout-wrap layout-sm="column" layout-xs="column">
+        <div flex>
+          <md-input-container class="md-block">
+          <md-icon md-svg-src="/modules/core/client/img/svg/ic_home_black_48px.svg" class="md-block"></md-icon>
+            <input type="text" name="address" ng-model="vm.address" placeholder="Home Address" required>
+            <div ng-messages="vm.profileForm.address.$error"  multiple md-auto-hide="true" ng-if="vm.profileForm.address.$touched || vm.profileForm.address.$dirty ">
+              <div ng-message="required" ng-style="{color: vm.profileForm.address.$touched ? 'Red' : 'Blue' }">
+                  This is a required Field
+              </div>
+            </div>
+          </md-input-container>
+        </div>
+      </div>
+      <div layout="row" layout-wrap layout-sm="column" layout-xs="column">
+        <div flex>
+          <md-input-container class="md-block">
+            <textarea type="text" name="note" ng-model="vm.note" placeholder="Notes">
+            </textarea>
+          </md-input-container>
+        </div>
+      </div>
+      <div layout="row">
+        <span flex></span>
+        <md-button ng-disabled="vm.disabledSave" type="submit" class="md-raised md-primary">
+           Save
+          <md-tooltip md-direction="top">
+            Click To Create Profile
+          </md-tooltip>
+        </md-button>
+      </div>
+    </form>
+  </div>
+</section>

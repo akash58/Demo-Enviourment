@@ -1,0 +1,30 @@
+<section>
+  <md-content style="text-align: center;">
+    <h3 >Vouchers Cashback Offers</h3>
+  </md-content>
+  <md-content class="md-padding" layout-xs="column" layout="row">
+    <div flex-xs flex-gt-xs="25" layout="column">
+      <md-card>
+        <h4 style="text-align: center">Filter By Store</h4>
+        <div data-ng-if="selected.length > 0" flex="100">
+          <md-chips ng-model="selected" ng-click="toggle1(item, selected); showSearch = true;"></md-chips>
+        </div>
+        <md-input-container md-theme="input" layout="row" layout-align="center end" flex>
+          <label>&nbsp;</label>
+          <input id="search" ng-model="test" placeholder="&#128269; Search Store">
+        </md-input-container>
+        <fieldset class="standard" style="padding-left: 10px; padding-top: 10px;overflow: auto;height: 180px;">
+          <div layout="column" layout-wrap flex>
+            <div flex="50" ng-repeat="item in items | filter:test"">
+              <md-checkbox ng-checked="exists(item, selected)" ng-click="toggle(item, selected)">
+                {{ item }} <span ng-if="exists(item, selected)"></span>
+              </md-checkbox>
+            </div>
+          </div>
+        </fieldset>
+        <md-card-content>
+        </md-card-content>
+      </md-card>
+    </div>
+  </md-content>
+</section>

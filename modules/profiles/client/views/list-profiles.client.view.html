@@ -1,0 +1,164 @@
+<section ng-cloak>
+  <md-subheader>
+    <div layout="row" layout-align="space-between center" >
+      <span hide-xs flex="60">
+        <h3><b style="font-color:'black'">Profiles</b></h3>
+      </span>
+      <span hide-gt-xs ng-if="!showSearch" flex>
+        <h3><b style="font-color:'black'">Profiles</b></h3>
+      </span>
+      <span flex layout="row" layout-align="end center" ng-hide="showSearch">
+        <md-button class="md-icon-button" ng-click="showSearch = true;"><!-- vm.autofocus(); -->
+          <md-icon md-svg-src="/modules/core/client/img/svg/ic_search_black_24px.svg"></md-icon>
+          <md-tooltip md-direction="end">
+            Open Search
+          </md-tooltip>
+        </md-button>
+      </span>
+      <span flex ng-show="showSearch">
+        <form name="search" data-ng-submit="vm.curPage.page = 1; vm.pagination(vm.searchTextProfile)">
+          <span layout="row" layout-align="space-between center">
+            <md-button class="md-icon-button" ng-click="showSearch = !showSearch; vm.searchTextProfile=''; vm.pagination(vm.searchTextProfile);">
+              <md-icon md-svg-src="/modules/core/client/img/svg/ic_close_black_24px.svg" ></md-icon>
+              <md-tooltip md-direction="down">
+                Close Search
+              </md-tooltip>
+            </md-button>
+            <md-input-container md-theme="input" layout="row" layout-align="center end" flex>
+              <label>&nbsp;</label>
+              <input ng-model="vm.searchTextProfile" placeholder="Search">
+            </md-input-container>
+            <md-button type="submit" class="md-icon-button">
+              <md-icon md-svg-src="/modules/core/client/img/svg/ic_search_black_24px.svg"></md-icon>
+              <md-tooltip md-direction="down" flex="60">
+                Search
+              </md-tooltip>
+            </md-button>
+          </span>
+        </form>
+      </span>
+    </div>
+  </md-subheader>
+  <div class="float-button">
+    <md-button data-ng-click="vm.goToCreateProfile()" class="md-fab md-mini md-primary md-fab-bottom-right" aria-label="Favorite">
+      <md-tooltip md-direction="top" flex="90">
+        Click To Add New Profile
+      </md-tooltip>
+      <md-icon md-svg-src="/modules/core/client/img/svg/ic_add_white_24px.svg" aria-lable="Add"></md-icon>
+    </md-button>
+  </div>
+  <md-content class="md-padding md-block">
+    <div>
+      <form name="vm.listProflieForm" class="form-horizontal">
+        <md-card ng-repeat="profile in vm.profiles" data-ng-if="profile.active === true">
+          <div layout-padding layout="row" style="background: #b3ffe6;" data-ng-click="vm.clickProfile(profile);  $event.stopPropagation();">
+            <div layout="row" layout-xs="column" data-ng-if="vm.editer || vm.active != profile._id" flex>
+              <div flex>
+                <h4>{{profile.name}}</h4>
+              </div>
+              <div flex>
+                <h4>{{profile.lastName}}</h4>
+              </div>
+                  <!-- <md-checkbox layout-sm="column" layout-xs="column" name="showByDefault" ng-model="otherCost.showByDefault" ng-disabled="vm.editer"></md-checkbox> -->
+                  <!-- <h4 flex>{{otherCost.showByDefault}}</h4> -->
+            </div>
+            <div layout="row" flex layout-xs="column" data-ng-if="!vm.editer && vm.active === profile._id"">
+              <div flex>
+                <md-input-container class="md-block" ng-click="$event.stopPropagation();">
+                  <label>First Name</label>
+                  <input name="name" ng-model="profile.name" ng-disabled="vm.editer" required>
+                </md-input-container>
+              </div>
+              <div flex>
+                <md-input-container class="md-block" ng-click="$event.stopPropagation();">
+                  <label>Last Name</label>
+                  <input name="name" ng-model="profile.lastName" ng-disabled="vm.editer" required>
+                </md-input-container>
+              </div>
+                <!-- <md-input-container ng-click="$event.stopPropagation();" flex>
+                  <label>Show By Default</label>
+                  <input name="showByDefault" ng-model="otherCost.showByDefault" ng-disabled="vm.editer" required>
+                </md-input-container> -->
+              </div>
+              <div layout="row" >
+                <md-button class="md-fab md-mini md-primary pull-right" ng-click="vm.editProfile(profile);  $event.stopPropagation();" data-ng-if="vm.editer && vm.active === profile._id">
+                  <md-icon md-svg-icon="/modules/core/client/img/svg/ic_edit_white_24px.svg"></md-icon>
+                  <md-tooltip>Click to edit</md-tooltip>
+                </md-button>
+                <md-button class="md-fab md-mini md-primary pull-right" ng-click="vm.removeProfile(profile);  $event.stopPropagation();" data-ng-if="vm.editer && vm.active === profile._id">
+                  <md-icon md-svg-icon="/modules/core/client/img/svg/ic_delete_white_24px.svg"></md-icon>
+                  <md-tooltip>Click to remove</md-tooltip>
+                </md-button>
+              </div>
+              <div layout="row" layout-xs="column">
+                <md-button class="md-fab md-mini md-primary pull-right" data-ng-if="!vm.editer && vm.active === profile._id" ng-click="vm.updateProfile(profile); $event.stopPropagation();">
+                  <md-icon md-svg-icon="/modules/core/client/img/svg/ic_update_white_24px.svg"></md-icon>
+                  <md-tooltip>Click to update</md-tooltip>
+                </md-button>
+                <md-button class="md-fab md-mini md-primary pull-right" data-ng-if="!vm.editer && vm.active === profile._id" ng-click="vm.cancelEdit(profile); $event.stopPropagation();">
+                  <md-icon md-svg-icon="/modules/core/client/img/svg/ic_close_white_24px.svg"></md-icon>
+                  <md-tooltip>Click to cancle edit</md-tooltip>
+                </md-button>
+              </div>
+            </div>
+            <div>
+              <md-card data-ng-if="vm.active === profile._id">
+                <div layout="row" layout-xs="column">
+                  <div flex>
+                    <md-input-container class="md-block" flex-gt-sm>
+                      <label>Contact Number</label>
+                      <input name="contactNumber" type="number" ng-model="profile.contactNumber" ng-disabled="vm.editer" required>
+                    </md-input-container>
+                  </div>
+                  <div flex>
+                    <label>Gender:</label>
+                    <md-radio-group layout="row" data-ng-model="profile.gender" ng-disabled="vm.editer">
+                      <md-radio-button value="Male" class="md-primary">Male</md-radio-button>
+                      <md-radio-button value="Female">Female</md-radio-button>
+                    </md-radio-group>
+                  </div>
+                </div>
+                <div layout="row" layout-xs="column">
+                  <div flex>
+                    <md-input-container class="md-block" flex-gt-sm>
+                      <label>Address</label>
+                      <input name="address" type="text" ng-model="profile.address" ng-disabled="vm.editer" required>
+                    </md-input-container>
+                  </div>
+                </div>
+                <div layout="row" layout-xs="column">
+                  <div flex>
+                    <md-input-container class="md-block" flex-gt-sm>
+                      <label>Notes</label>
+                      <input name="note" type="text" ng-model="profile.note" ng-disabled="vm.editer" required>
+                    </md-input-container>
+                  </div>
+                </div>
+              </md-card>
+            </div>
+          </md-card>
+        </form>
+      </div>
+    </md-content>
+  <!-- <div class="alert alert-warning" data-ng-if="vm.otherCosts.length == 0">There is no Other Costs created yet!</div> -->
+  <div data-ng-if="vm.totalItems.count==0" >
+    <div data-ng-if="!vm.searchTextProfile" class="alert alert-warning text-center" >
+       No Profile enter yet, please enter a Profile by clicking the blue icon below.
+    </div>
+    <div>
+      <div data-ng-if="vm.searchTextProfile.length > 0 " class="alert alert-warning text-center">
+        <h5>Search Not Match Any Document.</h5>
+      </div>
+    </div>
+  </div>
+  <ul uib-pagination total-items="vm.totalItems.count"
+    ng-model="vm.curPage.page"
+    max-size="vm.maxSize"
+    class="pagination-sm"
+    boundary-links="true"
+    rotate="false"
+    num-pages="numPages"
+    ng-change="vm.pagination(vm.searchTextProfile)">
+  </ul>
+  <pre>showing <b>{{vm.totalItems.count===0 ? 0 :vm.indexStart+1}}-{{vm.indexEnd}}</b> of <b>{{vm.totalItems.count}}</b> Profiles</pre>
+</section>
